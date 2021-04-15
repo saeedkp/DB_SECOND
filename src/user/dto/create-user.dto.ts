@@ -6,6 +6,6 @@ export default class CreateUserDto {
     @ApiProperty({description:'Enter the name of the user > ', type: "string", minLength: 3, maxLength: 10})
     readonly name: string;
 
-    @ApiProperty({description:"Enter the user's books >", type: "array", items: {type: "number"}})
+    @ApiProperty({description:"Enter the IDs of user's books >", type: "array", items: {type: "number"}})
     readonly books: number[] ;
   }
