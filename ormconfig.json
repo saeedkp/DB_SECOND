@@ -2,10 +2,8 @@
     "type": "sqlite",
     "database": "./database.sqlite",
     "synchronize": "true",
-    "entities": [
-      "dist/db/entity/**/*.js"
-    ],
+    "entities": ["dist/**/**.entity{.ts,.js}"],
     "cli": {
-      "entitiesDir": "src/db/entity"
+      "entitiesDir": "src/db"
     }
   }
