@@ -37,4 +37,7 @@ export class UserServices {
     }
     return user;
   }
+  async findUsername(username: string): Promise<UserEntity | undefined> {
+    return await UserEntity.findOne({where: {username: username}});
+  }
 }
