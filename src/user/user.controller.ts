@@ -32,13 +32,13 @@ export class UserController {
     @ApiResponse({ status: 200, description: "To delete a user" })
     @ApiQuery({name: 'userID', required: true, type: Number, description :`id of user which is being deleted`})
     @Delete('delete')
-    deleteBook(@Query('userID') userID) {
+    deleteUser(@Query('userID') userID) {
         return this.usersServices.delete(userID);
     }
 
     @ApiResponse({ status: 200, description: "To update a user" })
     @Put('update')
-    updateBook(@Body() user: UpdateUserDto) {
+    updateUser(@Body() user: UpdateUserDto) {
         return this.usersServices.update(user);
     }
 }
