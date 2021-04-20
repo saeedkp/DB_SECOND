@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, ManyToMany, JoinTable } from 'typeorm';
+import FreelancerEntity from './freelancer.entity';
 
 @Entity()
 export default class ResumeEntity extends BaseEntity 
@@ -23,5 +24,8 @@ export default class ResumeEntity extends BaseEntity
 
     @Column({length: 2000})
     sample_work: string;
+
+    @OneToOne(() => FreelancerEntity, freelancer => freelancer.resume) // specify inverse side as a second parameter
+    freelancer: FreelancerEntity;
 
 }

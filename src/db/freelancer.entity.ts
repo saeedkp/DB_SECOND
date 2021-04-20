@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToOne, ManyToMany, JoinColumn, OneToMany, JoinTable } from 'typeorm';
+import ProjectEntity from './project.entity';
+import ResumeEntity from './resume.entity';
 
 @Entity()
 export default class FreelancerEntity extends BaseEntity 
@@ -29,5 +31,14 @@ export default class FreelancerEntity extends BaseEntity
   
     @Column({length: 500})
     account_type: string;
+
+    @OneToOne(() => ResumeEntity, resume => resume.freelancer) // specify inverse side as a second parameter
+    @JoinColumn()
+    resume: ResumeEntity;
+
+    // 1:n relation with project
+    @OneToMany(type => ProjectEntity, project => project.freelancer)
+    @JoinTable()
+    projects: ProjectEntity[];
 
 }
