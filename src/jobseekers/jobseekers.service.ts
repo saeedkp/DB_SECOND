@@ -11,6 +11,8 @@ import UpdateFreelancerDto from './dto/update-freelancer.dto';
 import CreateResumeDto from './dto/create-resume.dto';
 import ResumeEntity from 'src/db/resume.entity';
 import UpdateResumeDto from './dto/update-resume.dto';
+import CreateProjectDto from './dto/create-project.dto';
+import UpdateProjectDto from './dto/update-project.dto';
 
 @Injectable()
 export class JobseekersService {
@@ -148,5 +150,43 @@ export class JobseekersService {
     }
 
 
+
+    async insertProject(projectDetails: CreateProjectDto): Promise<ProjectEntity> {
+        const projectEntity: ProjectEntity = ProjectEntity.create();
+        const { title, subject, priority, size, description, skills } = projectDetails;
+        projectEntity.title = title;
+        projectEntity.subject = subject;
+        projectEntity.priority = priority;
+        projectEntity.size = size;
+        projectEntity.description = description;
+        projectEntity.skills = skills;
+        await ProjectEntity.save(projectEntity);
+        return projectEntity;
+    }
+
+    async getAllProjects(): Promise<ProjectEntity[]> {
+        return await ProjectEntity.find();
+      }
+
+    async deleteProject(projectID: number): Promise<ProjectEntity> {
+          const project = await ProjectEntity.findOne(projectID);
+          await project.remove();
+          return project;
+      }
+
+    async updateProject(projectDetails: UpdateProjectDto): Promise<ProjectEntity> {
+        const { id, title, subject, priority, size, description, skills } = projectDetails;
+        const project = await ProjectEntity.findOne(id);
+        if(project != undefined) {
+            project.title = title;
+            project.subject = subject;
+            project.priority = priority;
+            project.size = size;
+            project.description = description;
+            project.skills = skills;
+            await ProjectEntity.save(project);
+        }
+        return project;
+    }
     
 }

@@ -8,6 +8,8 @@ import CreateFreelancerDto from './dto/create-freelancer.dto';
 import UpdateFreelancerDto from './dto/update-freelancer.dto';
 import CreateResumeDto from './dto/create-resume.dto';
 import UpdateResumeDto from './dto/update-resume.dto';
+import CreateProjectDto from './dto/create-project.dto';
+import UpdateProjectDto from './dto/update-project.dto';
 
 @Controller('jobseekers')
 export class JobseekersController {
@@ -115,5 +117,34 @@ export class JobseekersController {
         return this.jobseekersServices.updateResume(resume);
     }
 
+
+
+    @Header('Content-Type', 'application/json')
+    @ApiResponse({ status: 200, description: "Adds new project to database" })
+    @Public()
+    @Post('project/post')
+    postProject( @Body() project: CreateProjectDto) {
+        return this.jobseekersServices.insertProject(project);
+    }
+
+    @ApiResponse({ status: 200, description: "To get all the projects" })
+    @Public()
+    @Get('project/get')
+    getAllProj() {
+        return this.jobseekersServices.getAllProjects();
+    }
+
+    @ApiResponse({ status: 200, description: "To delete a project" })
+    @ApiQuery({name: 'ProjectID', required: true, type: Number, description :`id of project which is being deleted`})
+    @Delete('project/delete')
+    deleteProj(@Query('ProjectID') ProjectID) {
+        return this.jobseekersServices.deleteProject(ProjectID);
+    }
+
+    @ApiResponse({ status: 200, description: "To update a project" })
+    @Put('project/update')
+    updateProj(@Body() project: UpdateProjectDto) {
+        return this.jobseekersServices.updateProject(project);
+    }
 
 }
