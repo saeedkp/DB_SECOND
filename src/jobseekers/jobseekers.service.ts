@@ -8,6 +8,9 @@ import UpdateEmployerDto from './dto/update-employer.dto';
 import CreateFreelancerDto from './dto/create-freelancer.dto';
 import FreelancerEntity from 'src/db/freelancer.entity';
 import UpdateFreelancerDto from './dto/update-freelancer.dto';
+import CreateResumeDto from './dto/create-resume.dto';
+import ResumeEntity from 'src/db/resume.entity';
+import UpdateResumeDto from './dto/update-resume.dto';
 
 @Injectable()
 export class JobseekersService {
@@ -103,6 +106,45 @@ export class JobseekersService {
             await FreelancerEntity.save(freelancer);
         }
         return freelancer;
+    }
+
+
+    async insertResume(resumeDetails: CreateResumeDto): Promise<ResumeEntity> {
+        const resumeEntity: ResumeEntity = ResumeEntity.create();
+        const { languages, university, license, interests, skills, sample_work } = resumeDetails;
+        resumeEntity.languages = languages;
+        resumeEntity.university = university;
+        resumeEntity.license = license;
+        resumeEntity.interests = interests;
+        resumeEntity.skills = skills;
+        resumeEntity.sample_work = sample_work;
+        await ResumeEntity.save(resumeEntity);
+        return resumeEntity;
+    }
+
+    async getAllResumes(): Promise<ResumeEntity[]> {
+        return await ResumeEntity.find();
+      }
+
+    async deleteResume(resumeID: number): Promise<ResumeEntity> {
+          const resume = await ResumeEntity.findOne(resumeID);
+          await resume.remove();
+          return resume;
+      }
+
+    async updateResume(resumeDetails: UpdateResumeDto): Promise<ResumeEntity> {
+        const { id, languages, university, license, interests, skills, sample_work } = resumeDetails;
+        const resume = await ResumeEntity.findOne(id);
+        if(resume != undefined) {
+            resume.languages = languages;
+            resume.university = university;
+            resume.license = license;
+            resume.interests = interests;
+            resume.skills = skills;
+            resume.sample_work = sample_work;
+            await ResumeEntity.save(resume);
+        }
+        return resume;
     }
 
 

@@ -6,6 +6,8 @@ import UpdateEmployerDto from './dto/update-employer.dto';
 import { Public } from '../public.decorator';
 import CreateFreelancerDto from './dto/create-freelancer.dto';
 import UpdateFreelancerDto from './dto/update-freelancer.dto';
+import CreateResumeDto from './dto/create-resume.dto';
+import UpdateResumeDto from './dto/update-resume.dto';
 
 @Controller('jobseekers')
 export class JobseekersController {
@@ -80,6 +82,37 @@ export class JobseekersController {
     @Put('freelancer/update')
     updateFree(@Body() freelancer: UpdateFreelancerDto) {
         return this.jobseekersServices.updateFreelancer(freelancer);
+    }
+
+
+
+
+    @Header('Content-Type', 'application/json')
+    @ApiResponse({ status: 200, description: "Adds new resume to database" })
+    @Public()
+    @Post('resume/post')
+    postResume( @Body() resume: CreateResumeDto) {
+        return this.jobseekersServices.insertResume(resume);
+    }
+
+    @ApiResponse({ status: 200, description: "To get all the resumes" })
+    @Public()
+    @Get('resume/get')
+    getAllRes() {
+        return this.jobseekersServices.getAllResumes();
+    }
+
+    @ApiResponse({ status: 200, description: "To delete a resume" })
+    @ApiQuery({name: 'resumeId', required: true, type: Number, description :`id of resume which is being deleted`})
+    @Delete('resume/delete')
+    deleteRes(@Query('resumeId') resumeId) {
+        return this.jobseekersServices.deleteResume(resumeId);
+    }
+
+    @ApiResponse({ status: 200, description: "To update a resume" })
+    @Put('resume/update')
+    updateRes(@Body() resume: UpdateResumeDto) {
+        return this.jobseekersServices.updateResume(resume);
     }
 
 
