@@ -20,4 +20,10 @@ export default class CreateProjectDto {
 
     @ApiProperty({description:"Enter skills which are required for the project", type: "string"})
     readonly skills: string;
+
+    @ApiProperty({description:"Enter the ID of the employer which owns the project >", type: "number"})
+    readonly employer: number;
+
+    @ApiProperty({description:"Enter the ID of the freelancer which will do the project >", type: "number"})
+    readonly freelancer: number;
   }
