@@ -122,7 +122,7 @@ export class JobseekersService {
             const project = await ProjectEntity.findOne(projects[i]);
             freelancer.projects.push(project);
             }
-            
+
             await FreelancerEntity.save(freelancer);
         }
         return freelancer;
@@ -131,13 +131,14 @@ export class JobseekersService {
 
     async insertResume(resumeDetails: CreateResumeDto): Promise<ResumeEntity> {
         const resumeEntity: ResumeEntity = ResumeEntity.create();
-        const { languages, university, license, interests, skills, sample_work } = resumeDetails;
+        const { languages, university, license, interests, skills, sample_work, freelancer } = resumeDetails;
         resumeEntity.languages = languages;
         resumeEntity.university = university;
         resumeEntity.license = license;
         resumeEntity.interests = interests;
         resumeEntity.skills = skills;
         resumeEntity.sample_work = sample_work;
+        resumeEntity.freelancer = await FreelancerEntity.findOne(freelancer);
         await ResumeEntity.save(resumeEntity);
         return resumeEntity;
     }
@@ -153,7 +154,7 @@ export class JobseekersService {
       }
 
     async updateResume(resumeDetails: UpdateResumeDto): Promise<ResumeEntity> {
-        const { id, languages, university, license, interests, skills, sample_work } = resumeDetails;
+        const { id, languages, university, license, interests, skills, sample_work, freelancer } = resumeDetails;
         const resume = await ResumeEntity.findOne(id);
         if(resume != undefined) {
             resume.languages = languages;
@@ -162,6 +163,7 @@ export class JobseekersService {
             resume.interests = interests;
             resume.skills = skills;
             resume.sample_work = sample_work;
+            resume.freelancer = await FreelancerEntity.findOne(freelancer);
             await ResumeEntity.save(resume);
         }
         return resume;

@@ -4,7 +4,7 @@
   "port": 5432,
   "username": "postgres",
   "password": "bahar1377",
-  "database": "postgres_DB_new",
+  "database": "testdb",
   "entities": ["dist/**/**.entity{.ts,.js}"],
   "synchronize": true
 }
