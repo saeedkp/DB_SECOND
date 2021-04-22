@@ -64,7 +64,7 @@ export class JobseekersService {
 
     async insertFreelancer(freelancerDetails: CreateFreelancerDto): Promise<FreelancerEntity> {
         const freelancerEntity: FreelancerEntity = FreelancerEntity.create();
-        const { firstname, lastname, username, password, email, phone_number, score, account_type} = freelancerDetails;
+        const { firstname, lastname, username, password, email, phone_number, score, account_type, resume, projects} = freelancerDetails;
         freelancerEntity.firstname = firstname;
         freelancerEntity.lastname = lastname;
         freelancerEntity.username = username;
@@ -73,6 +73,15 @@ export class JobseekersService {
         freelancerEntity.phone_number = phone_number;
         freelancerEntity.score = score;
         freelancerEntity.account_type = account_type;
+        freelancerEntity.resume = await ResumeEntity.findOne(resume);
+
+        freelancerEntity.projects = [];
+        for ( let i = 0; i < projects.length ; i++)
+        {
+            const project = await ProjectEntity.findOne(projects[i]);
+            freelancerEntity.projects.push(project);
+        }
+
         await FreelancerEntity.save(freelancerEntity);
         return freelancerEntity;
     }
@@ -94,7 +103,7 @@ export class JobseekersService {
       }
 
     async updateFreelancer(freelancerDetails: UpdateFreelancerDto): Promise<FreelancerEntity> {
-        const { id, firstname, lastname, username, password, email, phone_number, score, account_type} = freelancerDetails;
+        const { id, firstname, lastname, username, password, email, phone_number, score, account_type, resume, projects} = freelancerDetails;
         const freelancer = await FreelancerEntity.findOne(id);
         if(freelancer != undefined) {
             freelancer.firstname = firstname;
@@ -105,6 +114,15 @@ export class JobseekersService {
             freelancer.phone_number = phone_number;
             freelancer.score = score;
             freelancer.account_type = account_type;
+            freelancer.resume = await ResumeEntity.findOne(resume);
+
+            freelancer.projects = [];
+            for ( let i = 0; i < projects.length ; i++)
+            {
+            const project = await ProjectEntity.findOne(projects[i]);
+            freelancer.projects.push(project);
+            }
+            
             await FreelancerEntity.save(freelancer);
         }
         return freelancer;
