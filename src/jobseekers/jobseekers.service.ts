@@ -19,13 +19,21 @@ export class JobseekersService {
 
     async insertEmployer(employerDetails: CreateEmployerDto): Promise<EmployerEntity> {
         const employerEntity: EmployerEntity = EmployerEntity.create();
-        const { firstname, lastname, username, password, email, phone_number} = employerDetails;
+        const { firstname, lastname, username, password, email, phone_number, projects} = employerDetails;
         employerEntity.firstname = firstname;
         employerEntity.lastname = lastname;
         employerEntity.username = username;
         employerEntity.password = password;
         employerEntity.email = email;
         employerEntity.phone_number = phone_number;
+
+        employerEntity.projects = [];
+        for ( let i = 0; i < projects.length ; i++)
+        {
+            const project = await ProjectEntity.findOne(projects[i]);
+            employerEntity.projects.push(project);
+        }
+
         await EmployerEntity.save(employerEntity);
         return employerEntity;
     }
@@ -47,7 +55,7 @@ export class JobseekersService {
       }
 
     async updateEmployer(employerDetails: UpdateEmployerDto): Promise<EmployerEntity> {
-        const { id, firstname, lastname, username, password, email, phone_number} = employerDetails;
+        const { id, firstname, lastname, username, password, email, phone_number, projects} = employerDetails;
         const employer = await EmployerEntity.findOne(id);
         if(employer != undefined) {
             employer.firstname = firstname;
@@ -56,6 +64,14 @@ export class JobseekersService {
             employer.password = password;
             employer.email = email;
             employer.phone_number = phone_number;
+
+            employer.projects = [];
+            for ( let i = 0; i < projects.length ; i++)
+            {
+            const project = await ProjectEntity.findOne(projects[i]);
+            employer.projects.push(project);
+            }
+
             await EmployerEntity.save(employer);
         }
         return employer;
