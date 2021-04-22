@@ -20,4 +20,7 @@ export default class CreateResumeDto {
 
     @ApiProperty({description:"Enter sample work of the user", type: "string"})
     readonly sample_work: string;
+
+    @ApiProperty({description:"Enter the id of owner' >", type: "number"})
+    readonly freelancer: number;
   }
