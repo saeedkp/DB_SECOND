@@ -197,6 +197,7 @@ export class JobseekersService {
         projectEntity.description = description;
         projectEntity.skills = skills;
         projectEntity.employer = await EmployerEntity.findOne(employer);
+        projectEntity.freelancer = null;
         await ProjectEntity.save(projectEntity);
         return projectEntity;
     }
@@ -212,7 +213,7 @@ export class JobseekersService {
       }
 
     async updateProject(projectDetails: UpdateProjectDto): Promise<ProjectEntity> {
-        const { id, title, subject, priority, size, description, skills, employer } = projectDetails;
+        const { id, title, subject, priority, size, description, skills, employer, freelancer } = projectDetails;
         const project = await ProjectEntity.findOne(id);
         if(project != undefined) {
             project.title = title;
@@ -222,6 +223,7 @@ export class JobseekersService {
             project.description = description;
             project.skills = skills;
             project.employer = await EmployerEntity.findOne(employer);
+            project.freelancer = await FreelancerEntity.findOne(freelancer);
             await ProjectEntity.save(project);
         }
         return project;
