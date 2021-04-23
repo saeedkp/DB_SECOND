@@ -17,7 +17,7 @@ export class JobseekersController {
 
     @Header('Content-Type', 'application/json')
     @ApiResponse({ status: 200, description: "Adds new employer to database" })
-    @ApiBearerAuth()
+    @Public()
     @Post('employer/post')
     postEmployer( @Body() employer: CreateEmployerDto) {
         return this.jobseekersServices.insertEmployer(employer);
@@ -58,7 +58,7 @@ export class JobseekersController {
 
     @Header('Content-Type', 'application/json')
     @ApiResponse({ status: 200, description: "Adds new freelancer to database" })
-    @ApiBearerAuth()
+    @Public()
     @Post('freelancer/post')
     postFreelancer( @Body() freelancer: CreateFreelancerDto) {
         return this.jobseekersServices.insertFreelancer(freelancer);
