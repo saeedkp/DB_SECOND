@@ -31,9 +31,10 @@ export class JobseekersController {
     }
 
     @ApiResponse({ status: 200, description: "To get all projects of an employer with a specific ID which comes with the request" })  
+    @ApiQuery({name: 'employerId', required: true, type: Number, description :`id of employer which wants his/her project`})
     @ApiBearerAuth()
-    @Get('employer/projects')
-    getProjectsEmp( @Body('employerId', ParseIntPipe) employerId: number ) {
+    @Post('employer/projects')
+    getProjectsEmp(@Query('employerId') employerId) {
         return this.jobseekersServices.getProjectsOfEmployer(employerId);
     }
 
@@ -71,9 +72,10 @@ export class JobseekersController {
     }
 
     @ApiResponse({ status: 200, description: "To get all projects of a freelancer with a specific ID which comes with the request" })  
+    @ApiQuery({name: 'freelancerId', required: true, type: Number, description :`id of freelancer which wants his/her projects`})
     @ApiBearerAuth()
-    @Get('freelancer/projects')
-    getProjectsfree( @Body('freelancerId', ParseIntPipe) freelancerId: number ) {
+    @Post('freelancer/projects')
+    getProjectsfree( @Query('freelancerId') freelancerId ) {
         return this.jobseekersServices.getProjectsOfFreelancer(freelancerId);
     }
 
