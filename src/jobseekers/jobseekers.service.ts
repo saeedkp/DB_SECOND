@@ -189,7 +189,7 @@ export class JobseekersService {
 
     async insertProject(projectDetails: CreateProjectDto): Promise<ProjectEntity> {
         const projectEntity: ProjectEntity = ProjectEntity.create();
-        const { title, subject, priority, size, description, skills, employer } = projectDetails;
+        const { title, subject, priority, size, description, skills, employer, freelancer } = projectDetails;
         projectEntity.title = title;
         projectEntity.subject = subject;
         projectEntity.priority = priority;
@@ -197,7 +197,7 @@ export class JobseekersService {
         projectEntity.description = description;
         projectEntity.skills = skills;
         projectEntity.employer = await EmployerEntity.findOne(employer);
-        projectEntity.freelancer = null;
+        projectEntity.freelancer = await FreelancerEntity.findOne(freelancer);
         await ProjectEntity.save(projectEntity);
         return projectEntity;
     }
